@@ -4,9 +4,13 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                dir('java-app') {
-                    sh 'mvn clean install'
-                }
+                sh 'mvn clean install'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                echo 'Docker build and push steps will be added here soon'
             }
         }
 
