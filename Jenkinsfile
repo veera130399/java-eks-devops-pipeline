@@ -4,21 +4,23 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                dir('java-app') {
+                    sh 'mvn clean install'
+                }
             }
         }
 
-        stage('Docker Build') {
+        stage('Docker Build & Push') {
             steps {
-                echo 'Docker build and push steps will be added here soon'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploy stage - future Docker/EKS steps'
+                script {
+                    dockerImage = docker.build("veera130399/devops-java-app")
+                    docker.withRegistry('', 'docker-hub-credentials') {
+                        dockerImage.push()
+                    }
+                }
             }
         }
     }
 }
+
 
